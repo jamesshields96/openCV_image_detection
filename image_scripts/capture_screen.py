@@ -29,18 +29,26 @@ class screenCapture:
                 cv2.destroyAllWindows()
                 break
 
-    def take_screenshot(self, top, left, width, height):
+    def take_screenshot(self):
+        top = 300
+        left = 700
+        width = 500
+        height = 500
 
         with mss.mss() as sct:
             sct_area = {'top': top, 'left': left, 'width': width, 'height': height}
-            output = "pos_base_images/sct-{top}x{left}_{width}x{height}.png".format(**sct_area)
+            output = "pos_base_images/pos_x.png".format(**sct_area)
 
             sct_img = sct.grab(sct_area)
 
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output)
 
+    def get_screen_data(self):
+        print(self.width // 2)
+        print(self.height // 2)
 
 
 if __name__ == "__main__":
     screen = screenCapture()
-    screen.take_screenshot(250, 250, 250, 250)
+    screen.get_screen_data()
+    screen.take_screenshot()
