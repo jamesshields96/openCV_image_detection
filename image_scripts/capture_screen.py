@@ -10,7 +10,7 @@ import time
 
 
 @dataclass
-class screenCapture:
+class ScreenCapture:
     top: int = field(default=0)
     left: int = field(default=0)
     width: int = field(default=GetSystemMetrics(0))
@@ -34,7 +34,7 @@ class screenCapture:
                     cv2.destroyAllWindows()
                     break
 
-    def take_screenshot(self):
+    def take_screenshot(self, sct_num = 1):
         top = 300
         left = 700
         width = 500
@@ -42,7 +42,7 @@ class screenCapture:
 
         with mss.mss() as sct:
             sct_area = {'top': top, 'left': left, 'width': width, 'height': height}
-            output = "pos_base_images/pos_x.png".format(**sct_area)
+            output = "pos_base_images/pos_{sct_num}.png".format(sct_num = sct_num)
 
             sct_img = sct.grab(sct_area)
 
@@ -53,5 +53,5 @@ class screenCapture:
 
 
 if __name__ == "__main__":
-    screen = screenCapture()
-    screen.run_capture()
+    screen = ScreenCapture()
+    screen.take_screenshot()
