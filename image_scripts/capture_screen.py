@@ -6,6 +6,8 @@ import mss.tools
 from PIL import Image
 from win32api import GetSystemMetrics
 from dataclasses import dataclass, field
+import time
+
 
 @dataclass
 class screenCapture:
@@ -19,15 +21,18 @@ class screenCapture:
         #create section of screen to be recorded
         bounding_box = {'top': self.top, 'left': self.left, 'width': self.width, 'height': self.height}
 
-        sct = mss()
+        with mss.mss() as sct:
 
-        while True:
-            sct_img = np.array(sct.grab(bounding_box))
-            cv2.imshow('screen', sct_img)
+            while True:
+                last_time = time.time()
 
-            if (cv2.waitKey(1) & 0xFF) == ord('q'):
-                cv2.destroyAllWindows()
-                break
+                sct_img = np.array(sct.grab(bounding_box))
+                cv2.imshow('screen', sct_img)
+
+                print("fps: {}".format(1 / (time.time() - last_time)))
+                if (cv2.waitKey(1) & 0xFF) == ord('q'):
+                    cv2.destroyAllWindows()
+                    break
 
     def take_screenshot(self):
         top = 300
@@ -44,11 +49,9 @@ class screenCapture:
             mss.tools.to_png(sct_img.rgb, sct_img.size, output=output)
 
     def get_screen_data(self):
-        print(self.width // 2)
-        print(self.height // 2)
+        return [self.width, self.height]
 
 
 if __name__ == "__main__":
     screen = screenCapture()
-    screen.get_screen_data()
-    screen.take_screenshot()
+    screen.run_capture()
