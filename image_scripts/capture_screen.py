@@ -64,6 +64,7 @@ class ScreenCapture:
                 self.take_screenshot()
             if response == 0:
                 break
+
 if __name__ == "__main__":
     screen = ScreenCapture()
     screen.menu()
