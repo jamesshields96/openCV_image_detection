@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 import time
 
 
+
 @dataclass
 class ScreenCapture:
     top: int = field(default=0)
@@ -51,7 +52,20 @@ class ScreenCapture:
     def get_screen_data(self):
         return [self.width, self.height]
 
-
+    def menu(self):
+        while True:
+            print("0. Exit")
+            print("1. Run screen capture")
+            print("2. Take screenshot")
+            response = int(input("Select an Option "))
+            if response == 1:
+                self.run_capture()
+            if response == 2:
+                self.take_screenshot()
+            if response == 0:
+                break
 if __name__ == "__main__":
     screen = ScreenCapture()
-    screen.take_screenshot()
+    screen.menu()
+
+
