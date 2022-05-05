@@ -43,7 +43,7 @@ class ScreenCapture:
 
         with mss.mss() as sct:
             sct_area = {'top': top, 'left': left, 'width': width, 'height': height}
-            output = "pos_base_images/pos_{sct_num}.png".format(sct_num = sct_num)
+            output = f"pos_base_images/pos_{sct_num}.png"
 
             sct_img = sct.grab(sct_area)
 
